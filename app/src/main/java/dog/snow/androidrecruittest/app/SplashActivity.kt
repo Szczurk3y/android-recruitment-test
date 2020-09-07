@@ -10,19 +10,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dog.snow.androidrecruittest.R
 import dog.snow.androidrecruittest.view.content.ListActivity
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.layout_progressbar.*
 import kotlinx.android.synthetic.main.splash_activity.*
 
 class SplashActivity : AppCompatActivity() {
 
     private val DELAY: Long = 2000
+    private val disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         makeFullScreen()
         setContentView(R.layout.splash_activity)
-        makeAnim()
+        startAnim()
 
         // Using a handler to delay loading the MainActivity
         Handler().postDelayed({
@@ -48,13 +50,15 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    private fun makeAnim() {
+    private fun startAnim() {
         progressbar.show()
         val ivLogoAnim = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
         val ivLogoTekstAnim = AnimationUtils.loadAnimation(this, R.anim.slide_in_right)
         iv_logo_sd_symbol.startAnimation(ivLogoAnim)
         iv_logo_sd_text.startAnimation(ivLogoTekstAnim)
     }
+
+
 
     private fun showError(errorMessage: String?) {
         MaterialAlertDialogBuilder(this)
