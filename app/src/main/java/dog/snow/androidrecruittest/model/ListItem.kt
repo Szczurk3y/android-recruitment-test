@@ -1,13 +1,12 @@
-package dog.snow.androidrecruittest.repository.model
+package dog.snow.androidrecruittest.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class RawPhoto(
+data class ListItem(
     val id: Int,
-    val albumId: Int,
     val title: String,
-    val url: String,
+    val albumTitle: String,
     val thumbnailUrl: String
 ) : Parcelable

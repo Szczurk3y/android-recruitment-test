@@ -1,4 +1,4 @@
-package dog.snow.androidrecruittest.ui.model
+package dog.snow.androidrecruittest.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

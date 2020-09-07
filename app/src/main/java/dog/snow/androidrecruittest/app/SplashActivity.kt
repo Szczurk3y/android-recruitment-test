@@ -1,7 +1,8 @@
-package dog.snow.androidrecruittest
+package dog.snow.androidrecruittest.app
 
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dog.snow.androidrecruittest.R
 
 class SplashActivity : AppCompatActivity(R.layout.splash_activity) {
     private fun showError(errorMessage: String?) {
