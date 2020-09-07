@@ -1,40 +1,41 @@
-package dog.snow.androidrecruittest.app
+package dog.snow.androidrecruittest.view.content
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dog.snow.androidrecruittest.R
-import dog.snow.androidrecruittest.view.content.ListActivity
+import dog.snow.androidrecruittest.model.DownloadStatus
+import dog.snow.androidrecruittest.viewmodel.SplashViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.layout_progressbar.*
 import kotlinx.android.synthetic.main.splash_activity.*
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity(R.layout.splash_activity) {
 
     private val DELAY: Long = 2000
     private val disposables = CompositeDisposable()
+    private lateinit var viewmodel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         makeFullScreen()
-        setContentView(R.layout.splash_activity)
         startAnim()
 
-        // Using a handler to delay loading the MainActivity
-        Handler().postDelayed({
-            startActivity(Intent(this, ListActivity::class.java))
+        viewmodel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
-            // Animate the loading of new activity
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        viewmodel.startDownload()
 
-            finish()
-        }, DELAY)
+        viewmodel.downloadingStatus.observe(this, Observer { status ->
+            if(status == DownloadStatus.END) {
+                finish()
+            }
+        })
 
     }
 
