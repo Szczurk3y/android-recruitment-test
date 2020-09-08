@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface JsonAPI {
     companion object {
@@ -33,7 +34,7 @@ interface JsonAPI {
     fun fetchAlbums(): Observable<List<RawAlbum>>
 
     @GET(JSON.PHOTOS_ENDPOINT)
-    fun fetchPhotos(): Observable<List<RawPhoto>>
+    fun fetchPhotos(@Query("_limit") limit: Int): Observable<List<RawPhoto>>
 
     @GET(JSON.USERS_ENDPOINT)
     fun fetchUsers(): Observable<List<RawUser>>

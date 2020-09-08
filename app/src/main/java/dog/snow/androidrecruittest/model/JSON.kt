@@ -17,8 +17,8 @@ object JSON {
         return json.fetchAlbums()
     }
 
-    fun fetchPhotos(): Observable<List<RawPhoto>> {
-        return json.fetchPhotos()
+    fun fetchPhotos(limit: Int): Observable<List<RawPhoto>> {
+        return json.fetchPhotos(limit)
     }
 
     fun fetchUsers(): Observable<List<RawUser>> {
