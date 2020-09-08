@@ -28,13 +28,13 @@ class SplashViewModel: ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
-                Log.i("Downloads", it.map { it.title }.toString())
+                Log.i("Downloads", it.toString())
             }
         val albumsSubscriptions = albums
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
-                Log.i("Downloads", it.map { it.title }.toString())
+                Log.i("Downloads", it.toString())
             }
 
         val usersSubscription = users
