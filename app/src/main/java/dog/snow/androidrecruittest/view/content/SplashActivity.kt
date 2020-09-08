@@ -12,10 +12,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dog.snow.androidrecruittest.R
 import dog.snow.androidrecruittest.model.DownloadStatus
 import dog.snow.androidrecruittest.viewmodel.SplashViewModel
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.layout_progressbar.*
 import kotlinx.android.synthetic.main.splash_activity.*
-import android.os.Handler
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var viewmodel: SplashViewModel
@@ -29,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
 
         viewmodel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
-        viewmodel.downloadingStatus.observe(this, Observer { status ->
+        viewmodel.downloadStatus.observe(this, Observer { status ->
             if(status == DownloadStatus.END) {
                 startActivity(Intent(this, ListActivity::class.java))
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
