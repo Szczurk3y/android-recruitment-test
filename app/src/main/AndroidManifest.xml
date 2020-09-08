@@ -8,8 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".app.SnowDogApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".app.MainActivity" />
         <activity
             android:name=".view.content.SplashActivity"
             android:launchMode="singleTask"

@@ -1,11 +1,15 @@
 package dog.snow.androidrecruittest.model
 
 import android.os.Parcelable
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity(tableName = "user_table")
 data class RawUser(
-    val id: Int,
+    @PrimaryKey @NonNull val id: Int,
     val name: String,
     val username: String,
     val email: String,

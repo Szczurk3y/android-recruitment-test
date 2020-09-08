@@ -11,7 +11,7 @@ interface UserDao {
     fun insert(user: RawUser)
 
     @Delete
-    fun Users(vararg user: RawUser)
+    fun clearUsers(vararg user: RawUser)
 
     @Query("SELECT * FROM user_table ORDER BY name ASC")
     fun getAllUsers(): LiveData<List<RawUser>>
