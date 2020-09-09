@@ -1,5 +1,6 @@
 package dog.snow.androidrecruittest.model
 
+import android.util.Log
 import io.reactivex.Observable
 
 
@@ -23,5 +24,23 @@ object JSON {
 
     fun fetchUsers(): Observable<List<RawUser>> {
         return json.fetchUsers()
+    }
+
+    fun filterAlbumForPhoto(albums: List<RawAlbum>, photo: RawPhoto): RawAlbum? {
+        albums.forEach { album ->
+            if (album.id == photo.albumId) {
+                return album
+            }
+        }
+        return null
+    }
+
+    fun filterUserForAlbum(users: List<RawUser>, album: RawAlbum): RawUser? {
+        users.forEach { user ->
+            if (user.id == album.userId) {
+                return user
+            }
+        }
+        return null
     }
 }
