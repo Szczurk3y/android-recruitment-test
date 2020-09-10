@@ -37,8 +37,8 @@ class RoomRepository : AlbumRepository, PhotoRepository, UserRepository {
         }
     }
 
-    override fun savePhoto(photo: RawPhoto) {
-        photoDao.insert(photo)
+    override fun saveMultiplePhotos(photos: List<RawPhoto>) {
+        photoDao.insertMultiplePhotos(photos)
     }
 
     override fun getAllPhotos(): LiveData<List<RawPhoto>> = allPhotos
@@ -46,7 +46,7 @@ class RoomRepository : AlbumRepository, PhotoRepository, UserRepository {
     override fun clearAllPhotos() {
         val photosArray = allPhotos.value?.toTypedArray()
         if (photosArray != null) {
-            photoDao.clearPhotos(*photosArray)
+            photoDao.clearPhotos()
         }
     }
 

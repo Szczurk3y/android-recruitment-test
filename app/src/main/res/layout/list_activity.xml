@@ -8,24 +8,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_items"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:paddingTop="@dimen/search_size"
         android:scrollbars="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="10"
-        tools:listitem="@layout/list_item"
-        tools:visibility="visible" />
+        tools:listitem="@layout/list_item" />
 
     <include layout="@layout/layout_search" />
 
     <include
         layout="@layout/layout_empty_view"
-        tools:visibility="gone" />
+        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

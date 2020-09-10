@@ -8,12 +8,12 @@ import dog.snow.androidrecruittest.model.RawPhoto
 @Dao
 interface PhotoDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(photo: RawPhoto)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertMultiplePhotos(photos: List<RawPhoto>)
 
-    @Delete
-    fun clearPhotos(vararg album: RawPhoto)
+    @Query("DELETE FROM photo_table")
+    fun clearPhotos()
 
-    @Query("SELECT * FROM photo_table ORDER BY title ASC")
+    @Query("SELECT * FROM photo_table")
     fun getAllPhotos(): LiveData<List<RawPhoto>>
 }

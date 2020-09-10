@@ -11,15 +11,21 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dog.snow.androidrecruittest.R
 import dog.snow.androidrecruittest.model.DownloadStatus
+import dog.snow.androidrecruittest.model.RawAlbum
+import dog.snow.androidrecruittest.model.RawPhoto
+import dog.snow.androidrecruittest.model.RawUser
 import dog.snow.androidrecruittest.viewmodel.SplashViewModel
 import kotlinx.android.synthetic.main.layout_progressbar.*
 import kotlinx.android.synthetic.main.splash_activity.*
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var viewmodel: SplashViewModel
+    private var albums = listOf<RawAlbum>()
+    private var photos = listOf<RawPhoto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         makeFullScreen()
         setContentView(R.layout.splash_activity)
@@ -29,10 +35,21 @@ class SplashActivity : AppCompatActivity() {
 
         viewmodel.downloadStatus.observe(this, Observer { status ->
             if(status == DownloadStatus.END) {
-                startActivity(Intent(this, ListActivity::class.java))
+                val intent = Intent(this, ListActivity::class.java)
+                intent.putParcelableArrayListExtra(RawAlbum.ALBUM_KEY, ArrayList(albums))
+                intent.putParcelableArrayListExtra(RawPhoto.PHOTO_KEY, ArrayList(photos))
+                startActivity(intent)
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
+        })
+
+        viewmodel.albumsLiveData.observe(this, Observer { albums: List<RawAlbum> ->
+            this.albums = albums
+        })
+
+        viewmodel.photosLiveData.observe(this, Observer { photos: List<RawPhoto> ->
+            this.photos = photos
         })
 
         viewmodel.startDownload()

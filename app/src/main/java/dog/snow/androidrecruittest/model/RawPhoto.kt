@@ -7,10 +7,15 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "photo_table")
+@Parcelize
 data class RawPhoto(
     @PrimaryKey @NonNull val id: Int,
-    val albumId: Int,
+    var albumId: Int,
     val title: String,
     val url: String,
     val thumbnailUrl: String
-)
+): Parcelable {
+    companion object {
+        const val PHOTO_KEY = "PHOTO_KEY"
+    }
+}

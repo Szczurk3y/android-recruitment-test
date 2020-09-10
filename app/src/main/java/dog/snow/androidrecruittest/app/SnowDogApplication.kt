@@ -2,7 +2,11 @@ package dog.snow.androidrecruittest.app
 
 import android.app.Application
 import android.os.Bundle
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
+import dog.snow.androidrecruittest.model.RawAlbum
+import dog.snow.androidrecruittest.model.RawPhoto
+import dog.snow.androidrecruittest.model.RawUser
 import dog.snow.androidrecruittest.model.room.MyDatabase
 
 class SnowDogApplication : Application() {
