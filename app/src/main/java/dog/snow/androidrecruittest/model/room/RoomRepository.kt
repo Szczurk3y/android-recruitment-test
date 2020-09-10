@@ -24,17 +24,14 @@ class RoomRepository : AlbumRepository, PhotoRepository, UserRepository {
         allUsers = userDao.getAllUsers()
     }
 
-    override fun saveAlbum(album: RawAlbum) {
-        albumDao.insert(album)
+    override fun saveMultipleAlbums(albums: List<RawAlbum>) {
+        albumDao.insertMultipleAlbums(albums)
     }
 
     override fun getAllAlbums(): LiveData<List<RawAlbum>> = allAlbums
 
     override fun clearAllAlbums() {
-        val albumsArray = allAlbums.value?.toTypedArray()
-        if (albumsArray != null) {
-            albumDao.clearAlbums(*albumsArray)
-        }
+        albumDao.clearAlbums()
     }
 
     override fun saveMultiplePhotos(photos: List<RawPhoto>) {
@@ -44,22 +41,16 @@ class RoomRepository : AlbumRepository, PhotoRepository, UserRepository {
     override fun getAllPhotos(): LiveData<List<RawPhoto>> = allPhotos
 
     override fun clearAllPhotos() {
-        val photosArray = allPhotos.value?.toTypedArray()
-        if (photosArray != null) {
-            photoDao.clearPhotos()
-        }
+        photoDao.clearPhotos()
     }
 
-    override fun saveUser(user: RawUser) {
-        userDao.insert(user)
+    override fun saveMultipleUsers(users: List<RawUser>) {
+        userDao.insertMultipleUsers(users)
     }
 
     override fun getAllUsers(): LiveData<List<RawUser>> = allUsers
 
     override fun clearAllUsers() {
-        val usersArray = allUsers.value?.toTypedArray()
-        if (usersArray != null) {
-            userDao.clearUsers(*usersArray)
-        }
+        userDao.clearUsers()
     }
 }

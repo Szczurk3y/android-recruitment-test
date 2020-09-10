@@ -7,11 +7,11 @@ import dog.snow.androidrecruittest.model.RawAlbum
 @Dao
 interface AlbumDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(album: RawAlbum)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertMultipleAlbums(albums: List<RawAlbum>)
 
-    @Delete
-    fun clearAlbums(vararg album: RawAlbum)
+    @Query("DELETE FROM album_table ")
+    fun clearAlbums()
 
     @Query("SELECT * FROM album_table ORDER BY title ASC")
     fun getAllAlbums(): LiveData<List<RawAlbum>>

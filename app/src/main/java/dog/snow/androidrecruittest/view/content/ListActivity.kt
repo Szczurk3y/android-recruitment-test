@@ -15,10 +15,6 @@ import kotlinx.android.synthetic.main.list_activity.*
 
 class ListActivity() : AppCompatActivity() {
 
-    companion object {
-        private const val ALBUM_KEY = "ALBUM_KEY"
-    }
-
     private lateinit var viewmodel: ListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

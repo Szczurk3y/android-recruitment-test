@@ -22,6 +22,7 @@ class SplashViewModel(
     val downloadStatus = MutableLiveData<DownloadStatus>()
     val albumsLiveData = MutableLiveData<List<RawAlbum>>()
     val photosLiveData = MutableLiveData<List<RawPhoto>>()
+    val usersLiveData = MutableLiveData<List<RawUser>>()
 
     init {
         repository.clearAllPhotos()
@@ -67,13 +68,13 @@ class SplashViewModel(
 
         val filteredAlbumsSubscription = filteredAlbums
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.io())
             .subscribe {
                 saveAlbums(it)
             }
         val filteredUsersSubscription = filteredUsers
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.io())
             .subscribe {
                 Log.i("Filtered Users HEJA", it.toString())
             }
@@ -87,11 +88,13 @@ class SplashViewModel(
     }
 
     fun saveAlbums(albums: List<RawAlbum>) {
-        albumsLiveData.value = albums
+        repository.saveMultipleAlbums(albums)
+        albumsLiveData.postValue(albums)
     }
 
-    fun saveUsers() {
-
+    fun saveUsers(users: List<RawUser>) {
+        repository.saveMultipleUsers(users)
+        usersLiveData.postValue(users)
     }
 
     override fun onCleared() {

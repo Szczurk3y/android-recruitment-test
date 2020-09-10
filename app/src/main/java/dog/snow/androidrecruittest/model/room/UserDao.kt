@@ -7,11 +7,11 @@ import dog.snow.androidrecruittest.model.RawUser
 @Dao
 interface UserDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: RawUser)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertMultipleUsers(users: List<RawUser>)
 
-    @Delete
-    fun clearUsers(vararg user: RawUser)
+    @Query("DELETE FROM user_table")
+    fun clearUsers()
 
     @Query("SELECT * FROM user_table ORDER BY name ASC")
     fun getAllUsers(): LiveData<List<RawUser>>

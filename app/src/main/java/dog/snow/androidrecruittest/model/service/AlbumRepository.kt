@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import dog.snow.androidrecruittest.model.RawAlbum
 
 interface AlbumRepository {
-    fun saveAlbum(album: RawAlbum)
+    fun saveMultipleAlbums(albums: List<RawAlbum>)
     fun getAllAlbums(): LiveData<List<RawAlbum>>
     fun clearAllAlbums()
 }
