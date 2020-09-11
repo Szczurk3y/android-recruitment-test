@@ -8,6 +8,7 @@ import com.squareup.picasso.Picasso
 import dog.snow.androidrecruittest.R
 import dog.snow.androidrecruittest.model.RawAlbum
 import dog.snow.androidrecruittest.model.RawPhoto
+import dog.snow.androidrecruittest.model.RawUser
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class PhotosAdapter(
@@ -15,9 +16,21 @@ class PhotosAdapter(
     private val albumsList: MutableList<RawAlbum>
 ): RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
 
+    private var listener: ((RawPhoto) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return ViewHolder(view)
+    }
+
+    fun swapData(photos: List<RawPhoto>) {
+        this.photosList.clear()
+        this.photosList.addAll(photos)
+        notifyDataSetChanged()
+    }
+
+    fun setOnPhotoTapListener(listener: ((RawPhoto) -> Unit)? = null) {
+        this.listener = listener
     }
 
     override fun getItemCount(): Int {
@@ -26,16 +39,21 @@ class PhotosAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.photo_title.text = photosList[position].title
-        holder.album_title.text = if (photosList[position].albumId == 1) {
-            "quidem molestiae enim"
-        } else {
-            "sunt qui excepturi placeat culpa"
+        albumsList.forEach {album ->
+            if (photosList[position].albumId == album.id) {
+                holder.album_title.text = album.title
+            }
         }
 
         Picasso.get()
             .load(photosList[position].thumbnailUrl)
             .placeholder(R.drawable.ic_placeholder)
             .into(holder.thumbnail)
+
+
+        holder.itemView.setOnClickListener {
+            listener?.invoke(photosList[position])
+        }
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

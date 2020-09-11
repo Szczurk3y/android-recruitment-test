@@ -13,7 +13,7 @@ interface UserDao {
     @Query("DELETE FROM user_table")
     fun clearUsers()
 
-    @Query("SELECT * FROM user_table ORDER BY name ASC")
-    fun getAllUsers(): LiveData<List<RawUser>>
+    @Query("SELECT * FROM user_table WHERE id = :id")
+    fun getUser(id: Int): LiveData<RawUser>
 
 }

@@ -13,22 +13,27 @@ import dog.snow.androidrecruittest.view.adapter.PhotosAdapter
 import dog.snow.androidrecruittest.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.list_activity.*
 
-class ListActivity() : AppCompatActivity() {
+class ListActivity : AppCompatActivity() {
 
     private lateinit var viewmodel: ListViewModel
+    private lateinit var adapter: PhotosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
          setContentView(R.layout.list_activity)
 
-        val photos = intent.getParcelableArrayListExtra<RawPhoto>(RawPhoto.PHOTO_KEY)!!.toList()
-        val albums = intent.getParcelableArrayListExtra<RawAlbum>(RawAlbum.ALBUM_KEY)!!.toList()
-        val users = intent.getParcelableArrayListExtra<RawUser>(RawUser.USER_KEY)!!.toList()
+        val photos = intent.getParcelableArrayListExtra<RawPhoto>(RawPhoto.PHOTO_KEY)!!.toMutableList()
+        val albums = intent.getParcelableArrayListExtra<RawAlbum>(RawAlbum.ALBUM_KEY)!!.toMutableList()
+        val users = intent.getParcelableArrayListExtra<RawUser>(RawUser.USER_KEY)!!.toMutableList()
 
-        Log.i("Users size", users.size.toString())
+        adapter = PhotosAdapter(mutableListOf(), albums)
 
         rv_items.layoutManager = LinearLayoutManager(this)
-        rv_items.adapter = PhotosAdapter(photos.toMutableList(), albums.toMutableList())
+        rv_items.adapter = adapter
+
+        adapter.setOnPhotoTapListener { photo ->
+            val fragment = DetailsFragment
+        }
 
         viewmodel = ViewModelProviders.of(this).get(ListViewModel::class.java)
     }

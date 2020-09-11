@@ -7,4 +7,5 @@ interface AlbumRepository {
     fun saveMultipleAlbums(albums: List<RawAlbum>)
     fun getAllAlbums(): LiveData<List<RawAlbum>>
     fun clearAllAlbums()
+    fun getAlbum(id: Int): LiveData<RawAlbum>
 }

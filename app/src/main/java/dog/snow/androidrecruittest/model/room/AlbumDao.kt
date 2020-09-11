@@ -13,6 +13,9 @@ interface AlbumDao {
     @Query("DELETE FROM album_table ")
     fun clearAlbums()
 
+    @Query("SELECT * FROM album_table WHERE id = :id")
+    fun getAlbum(id: Int): LiveData<RawAlbum>
+
     @Query("SELECT * FROM album_table ORDER BY title ASC")
     fun getAllAlbums(): LiveData<List<RawAlbum>>
 }

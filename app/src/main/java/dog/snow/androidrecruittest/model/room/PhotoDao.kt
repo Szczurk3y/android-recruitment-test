@@ -14,6 +14,9 @@ interface PhotoDao {
     @Query("DELETE FROM photo_table")
     fun clearPhotos()
 
+    @Query("SELECT * FROM photo_table WHERE id = :id")
+    fun getPhoto(id: Int): LiveData<RawPhoto>
+
     @Query("SELECT * FROM photo_table")
     fun getAllPhotos(): LiveData<List<RawPhoto>>
 }
