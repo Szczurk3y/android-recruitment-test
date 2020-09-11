@@ -25,9 +25,14 @@ class SplashViewModel(
     val usersLiveData = MutableLiveData<List<RawUser>>()
 
     init {
-//        repository.clearAllPhotos()
-//        repository.clearAllAlbums()
-//        repository.clearAllUsers()
+        disposables.add(Observable.empty<Any>()
+            .subscribeOn(Schedulers.io())
+            .subscribe {
+                repository.clearAllPhotos()
+                repository.clearAllAlbums()
+                repository.clearAllUsers()
+            })
+
     }
 
     fun startDownload() {
