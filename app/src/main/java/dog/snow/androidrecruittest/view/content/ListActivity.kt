@@ -26,13 +26,14 @@ class ListActivity : AppCompatActivity() {
         val albums = intent.getParcelableArrayListExtra<RawAlbum>(RawAlbum.ALBUM_KEY)!!.toMutableList()
         val users = intent.getParcelableArrayListExtra<RawUser>(RawUser.USER_KEY)!!.toMutableList()
 
-        adapter = PhotosAdapter(mutableListOf(), albums)
+        adapter = PhotosAdapter(photos, albums)
 
         rv_items.layoutManager = LinearLayoutManager(this)
         rv_items.adapter = adapter
 
         adapter.setOnPhotoTapListener { photo ->
-            val fragment = DetailsFragment
+            val fragment = DetailsFragment.newInstance(photo)
+            fragment.show(supportFragmentManager, "Details Fragment")
         }
 
         viewmodel = ViewModelProviders.of(this).get(ListViewModel::class.java)

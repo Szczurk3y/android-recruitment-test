@@ -19,8 +19,8 @@ class RawUserConverter {
     fun toRawGeo(value: String?): RawUser.RawAddress.RawGeo? = if (value != null) {
         val pieces = value.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         RawUser.RawAddress.RawGeo(
-            lat = pieces[4],
-            lng = pieces[5]
+            lat = pieces[0],
+            lng = pieces[1]
         )
     } else {
         null

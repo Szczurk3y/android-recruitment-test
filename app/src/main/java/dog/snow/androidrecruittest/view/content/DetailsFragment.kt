@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.details_fragment.*
 
 class DetailsFragment : DialogFragment(),  Toolbar.OnMenuItemClickListener {
     private lateinit var detailViewModel: DetailsViewModel
-    private lateinit var photoViewitem: RawPhoto
     private lateinit var photo: RawPhoto
     private lateinit var album: RawAlbum
     private lateinit var user: RawUser
@@ -59,10 +58,10 @@ class DetailsFragment : DialogFragment(),  Toolbar.OnMenuItemClickListener {
         detailsToolbar.setOnMenuItemClickListener(this)
 
         arguments?.getParcelable<RawPhoto>(RawPhoto.PHOTO_KEY)?.let {
-            photoViewitem = it
+            photo = it
         }
 
-        detailViewModel.getAlbum(photoViewitem.albumId).observe(viewLifecycleOwner, Observer { album ->
+        detailViewModel.getAlbum(photo.albumId).observe(viewLifecycleOwner, Observer { album ->
             this.album = album
             detailViewModel.getUser(album.userId).observe(viewLifecycleOwner, Observer { user ->
                 this.user = user
