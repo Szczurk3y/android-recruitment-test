@@ -89,17 +89,17 @@ class SplashViewModel(
         disposables.addAll(photosSubscription, filteredAlbumsSubscription, filteredUsersSubscription)
     }
 
-    fun savePhotos(photos: List<RawPhoto>) {
+    private fun savePhotos(photos: List<RawPhoto>) {
         repository.saveMultiplePhotos(photos)
         photosLiveData.postValue(photos)
     }
 
-    fun saveAlbums(albums: List<RawAlbum>) {
+    private fun saveAlbums(albums: List<RawAlbum>) {
         repository.saveMultipleAlbums(albums)
         albumsLiveData.postValue(albums)
     }
 
-    fun saveUsers(users: List<RawUser>) {
+    private fun saveUsers(users: List<RawUser>) {
         repository.saveMultipleUsers(users)
         usersLiveData.postValue(users)
     }

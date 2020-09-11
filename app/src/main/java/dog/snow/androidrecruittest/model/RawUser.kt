@@ -18,6 +18,9 @@ data class RawUser(
     val website: String,
     val company: RawCompany
 ) : Parcelable {
+    companion object {
+        const val USER_KEY = "USER_KEY"
+    }
     @Parcelize
     data class RawAddress(
         val street: String,
