@@ -6,23 +6,30 @@ import java.util.*
 
 class RawUserConverter {
 
+
+
     @TypeConverter
-    fun fromRawAddress(rawAddress: RawUser.RawAddress?): String? = if (rawAddress != null) {
-        String.format(Locale.US, "%d,%d,%d,%d,%d,%d", rawAddress.street, rawAddress.suite, rawAddress.city, rawAddress.zipcode, rawAddress.geo.lat, rawAddress.geo.lng)
+    fun fromRawGeo(rawGeo: RawUser.RawAddress.RawGeo?): String? = if (rawGeo != null) {
+        String.format(Locale.US, "%s,%s", rawGeo.lat, rawGeo.lng)
     } else {
         null
     }
 
-//    @TypeConverter
-//    fun fromRawGeo(rawGeo: RawUser.RawAddress.RawGeo?): String? = if (rawGeo != null) {
-//        String.format(Locale.US, "%d,%d", rawGeo.lat, rawGeo.lng)
-//    } else {
-//        null
-//    }
+    @TypeConverter
+    fun toRawGeo(value: String?): RawUser.RawAddress.RawGeo? = if (value != null) {
+        val pieces = value.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        RawUser.RawAddress.RawGeo(
+            lat = pieces[4],
+            lng = pieces[5]
+        )
+    } else {
+        null
+    }
+
 
     @TypeConverter
-    fun fromRawCompany(rawCompany: RawUser.RawCompany?): String? = if (rawCompany != null) {
-        String.format(Locale.US, "%d,%d,%d", rawCompany.name, rawCompany.catchPhrase, rawCompany.bs)
+    fun fromRawAddress(rawAddress: RawUser.RawAddress?): String? = if (rawAddress != null) {
+        String.format(Locale.US, "%s,%s,%s,%s,%s", rawAddress.street, rawAddress.suite, rawAddress.city, rawAddress.zipcode, rawAddress.geo.lng, rawAddress.geo.lng)
     } else {
         null
     }
@@ -35,11 +42,15 @@ class RawUserConverter {
             suite = pieces[1],
             city = pieces[2],
             zipcode = pieces[3],
-            geo = RawUser.RawAddress.RawGeo(
-                pieces[4],
-                pieces[5]
-            )
+            geo = toRawGeo(value)!!
         )
+    } else {
+        null
+    }
+
+    @TypeConverter
+    fun fromRawCompany(rawCompany: RawUser.RawCompany?): String? = if (rawCompany != null) {
+        String.format(Locale.US, "%s,%s,%s", rawCompany.name, rawCompany.catchPhrase, rawCompany.bs)
     } else {
         null
     }

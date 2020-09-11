@@ -23,7 +23,7 @@ class SnowDogApplication : Application() {
         super.onCreate()
 
         database = Room.databaseBuilder(this, MyDatabase::class.java, "my_database")
-            .allowMainThreadQueries()
+//            .allowMainThreadQueries()
             .build()
     }
 }
