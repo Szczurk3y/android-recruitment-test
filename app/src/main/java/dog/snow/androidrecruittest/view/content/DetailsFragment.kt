@@ -58,12 +58,6 @@ class DetailsFragment : DialogFragment(),  Toolbar.OnMenuItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        detailsToolbar.setNavigationOnClickListener {
-            dismiss()
-        }
-
-        detailsToolbar.setOnMenuItemClickListener(this)
-
         arguments?.getParcelable<RawPhoto>(RawPhoto.PHOTO_KEY)?.let {
             photo = it
         }
