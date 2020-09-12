@@ -79,16 +79,15 @@ class DetailsFragment : DialogFragment(),  Toolbar.OnMenuItemClickListener {
     }
 
     private fun displayInfo() {
-        // Load the image
         Picasso.get()
             .load(photo.thumbnailUrl)
             .error(R.drawable.ic_placeholder)
             .placeholder(R.drawable.ic_placeholder)
             .into(iv_photo)
 
-        // Load the photo info
         tv_photo_title.text = photo.title
         tv_album_title.text = album.title
+        tv_username.text = user.username
         tv_email.text = user.email
         tv_phone.text = user.phone
 

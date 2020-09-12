@@ -17,7 +17,7 @@ class SplashViewModel(
     private val repository: RoomRepository = RoomRepository()
 ): ViewModel() {
 
-    val disposables = CompositeDisposable()
+    private val disposables = CompositeDisposable()
 
     val downloadStatus = MutableLiveData<DownloadStatus>()
     val albumsLiveData = MutableLiveData<List<RawAlbum>>()

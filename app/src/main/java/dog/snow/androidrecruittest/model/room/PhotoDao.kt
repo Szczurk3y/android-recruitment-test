@@ -11,6 +11,9 @@ interface PhotoDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMultiplePhotos(photos: List<RawPhoto>)
 
+    @Query("SELECT * FROM photo_table WHERE title LIKE :title")
+    fun findPhotos(title: String): LiveData<RawPhoto>
+
     @Query("DELETE FROM photo_table")
     fun clearPhotos()
 

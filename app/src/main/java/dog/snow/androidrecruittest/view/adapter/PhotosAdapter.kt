@@ -23,7 +23,7 @@ class PhotosAdapter(
         return ViewHolder(view)
     }
 
-    fun swapData(photos: List<RawPhoto>) {
+    fun update(photos: List<RawPhoto>) {
         this.photosList.clear()
         this.photosList.addAll(photos)
         notifyDataSetChanged()
