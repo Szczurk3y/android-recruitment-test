@@ -10,14 +10,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dog.snow.androidrecruittest.R
-import dog.snow.androidrecruittest.model.DownloadStatus
-import dog.snow.androidrecruittest.model.RawAlbum
-import dog.snow.androidrecruittest.model.RawPhoto
-import dog.snow.androidrecruittest.model.RawUser
 import dog.snow.androidrecruittest.viewmodel.SplashViewModel
 import kotlinx.android.synthetic.main.layout_progressbar.*
 import kotlinx.android.synthetic.main.splash_activity.*
 import android.os.Handler
+import android.view.View
+import dog.snow.androidrecruittest.app.SnowDogApplication
+import dog.snow.androidrecruittest.model.*
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var viewmodel: SplashViewModel
@@ -49,6 +48,15 @@ class SplashActivity : AppCompatActivity() {
             }
         })
 
+        SnowDogApplication.connectivityLiveData.observe(this, Observer { status ->
+            if (status == ConnectivityStatus.AVAILABLE) {
+                viewmodel.startDownload()
+            } else {
+                error_message.visibility = View.VISIBLE
+                progressbar.visibility = View.GONE
+            }
+        })
+
         viewmodel.albumsLiveData.observe(this, Observer { albums: List<RawAlbum> ->
             this.albums = albums
         })
@@ -61,7 +69,6 @@ class SplashActivity : AppCompatActivity() {
             this.users = users
         })
 
-        viewmodel.startDownload()
 
     }
 
@@ -83,18 +90,5 @@ class SplashActivity : AppCompatActivity() {
         val ivLogoTekstAnim = AnimationUtils.loadAnimation(this, R.anim.slide_in_right)
         iv_logo_sd_symbol.startAnimation(ivLogoAnim)
         iv_logo_sd_text.startAnimation(ivLogoTekstAnim)
-    }
-
-
-
-    private fun showError(errorMessage: String?) {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.cant_download_dialog_title)
-            .setMessage(getString(R.string.cant_download_dialog_message, errorMessage))
-            .setPositiveButton(R.string.cant_download_dialog_btn_positive) { _, _ -> /*tryAgain()*/ }
-            .setNegativeButton(R.string.cant_download_dialog_btn_negative) { _, _ -> finish() }
-            .create()
-            .apply { setCanceledOnTouchOutside(false) }
-            .show()
     }
 }

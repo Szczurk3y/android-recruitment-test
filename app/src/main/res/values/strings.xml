@@ -5,6 +5,7 @@
     <string name="empty_filter_list">No items to show for filter: %s</string>
     <string name="offline_mode">You\'re in offline mode</string>
     <string name="cant_download_dialog_title">Can\'t download necessary data!</string>
+    <string name="wait_for_wifi_access">Can\'t download necessary data!\nTurn on your wifi access and wait for app to load </string>
     <string name="cant_download_dialog_message">Can\'t download data because of error:\n%s\nCheck your internet connection.</string>
     <string name="cant_download_dialog_btn_positive">Try again</string>
     <string name="cant_download_dialog_btn_negative">Close</string>

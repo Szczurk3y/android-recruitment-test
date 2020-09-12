@@ -20,6 +20,18 @@
 
     <include layout="@layout/layout_search" />
 
+    <TextView
+        android:id="@+id/tv_offline_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_small"
+        android:text="@string/offline_mode"
+        android:visibility="visible"
+        android:elevation="10dp"
+        android:textAlignment="center"
+        android:background="@color/light_accent_color"
+        />
+
     <include
         layout="@layout/layout_empty_view"
         android:visibility="gone" />

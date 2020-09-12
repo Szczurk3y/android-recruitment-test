@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import dog.snow.androidrecruittest.R
+import dog.snow.androidrecruittest.app.SnowDogApplication
+import dog.snow.androidrecruittest.model.ConnectivityStatus
 import dog.snow.androidrecruittest.model.RawAlbum
 import dog.snow.androidrecruittest.model.RawPhoto
 import dog.snow.androidrecruittest.model.RawUser
@@ -47,5 +50,13 @@ class ListActivity : AppCompatActivity() {
         })
 
         viewmodel.createTextChangeObservable(search)
+
+        SnowDogApplication.connectivityLiveData.observe(this, Observer { status ->
+            if (status == ConnectivityStatus.AVAILABLE) {
+                tv_offline_mode.visibility = View.GONE
+            } else {
+                tv_offline_mode.visibility = View.VISIBLE
+            }
+        })
     }
 }

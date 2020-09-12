@@ -9,10 +9,10 @@
     android:layout_marginStart="@dimen/margin_normal"
     android:layout_marginTop="@dimen/spacing_normal"
     android:layout_marginEnd="@dimen/margin_normal"
-    android:layout_marginBottom="@dimen/margin_normal"
     android:hint="@string/search_hint"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+    app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+    android:layout_below="@id/tv_offline_mode">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_search"

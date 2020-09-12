@@ -20,10 +20,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class SnowDogApplication : Application() {
-    val connectivityLiveData = MutableLiveData<ConnectivityStatus>()
-
     companion object {
         lateinit var database: MyDatabase
+        val connectivityLiveData = MutableLiveData<ConnectivityStatus>()
     }
 
     override fun onCreate() {
@@ -36,15 +35,29 @@ class SnowDogApplication : Application() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
-                    connectivityLiveData.postValue(ConnectivityStatus.AVAILABLE)
                     Log.i("Connection test", "available")
+                    connectivityLiveData.postValue(ConnectivityStatus.AVAILABLE)
                 }
 
                 override fun onLost(network: Network?) {
+                    Log.i("Connection test", "lost")
                     connectivityLiveData.postValue(ConnectivityStatus.UNAVAILABLE)
+                }
+
+                override fun onUnavailable() {
                     Log.i("Connection test", "unavailable")
+                    connectivityLiveData.postValue(ConnectivityStatus.UNAVAILABLE)
                 }
             })
+        }
+
+        val conMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = conMgr.activeNetworkInfo;
+        if (activeNetwork != null && activeNetwork.isConnected()) {
+            connectivityLiveData.postValue(ConnectivityStatus.AVAILABLE)
+
+        } else {
+            connectivityLiveData.postValue(ConnectivityStatus.UNAVAILABLE)
         }
     }
 }
