@@ -4,4 +4,10 @@
     <style name="Widget.AppTheme.AppBar" parent="@style/Widget.Design.AppBarLayout" />
 
     <style name="Widget.AppTheme.Banner" parent="@style/Widget.MaterialComponents.TextView" />
+
+    <style name="AppTheme.Fragment">
+        <item name="android:windowEnterAnimation">@anim/fragment_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/fragment_slide_out</item>
+    </style>
+
 </resources>

@@ -30,13 +30,20 @@ class DetailsFragment : DialogFragment(),  Toolbar.OnMenuItemClickListener {
                 putParcelable(RawPhoto.PHOTO_KEY, photo)
             }
             fragment.arguments = args
+
             return fragment
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        dialog?.window?.attributes?.windowAnimations = R.style.AppTheme_Fragment
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setStyle(STYLE_NORMAL, R.style.AppTheme_Fragment)
         detailViewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
     }
 
