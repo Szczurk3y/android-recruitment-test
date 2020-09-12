@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import dog.snow.androidrecruittest.R
@@ -40,6 +41,10 @@ class ListActivity : AppCompatActivity() {
         }
 
         viewmodel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+
+        viewmodel.searchLiveData.observe(this, Observer {
+            adapter.update(it)
+        })
 
         viewmodel.createTextChangeObservable(search)
     }

@@ -14,12 +14,14 @@ import dog.snow.androidrecruittest.model.room.RoomRepository
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class ListViewModel: ViewModel() {
+class ListViewModel(private val repository: RoomRepository = RoomRepository()): ViewModel() {
     private val disposables = CompositeDisposable()
+    val searchLiveData = MutableLiveData<List<RawPhoto>>()
 
     fun createTextChangeObservable(input: TextInputLayout) {
         val textChangeObservable = Observable.create<String> {emitter ->
@@ -40,15 +42,20 @@ class ListViewModel: ViewModel() {
                 input.editText?.removeTextChangedListener(textWatcher)
             }
         }
-        val textChangeStream = textChangeObservable.debounce(500, TimeUnit.MILLISECONDS).toFlowable(BackpressureStrategy.BUFFER)
+        val textChangeStream = textChangeObservable.toFlowable(BackpressureStrategy.BUFFER)
 
-//        disposables.add(textChangeStream
-//            .observeOn(Schedulers.io())
-//            .map {  }
-//        )
+        val subscription = textChangeStream
+            .observeOn(Schedulers.io())
+            .map { repository.findPhotos(title = "%$it%") as List<RawPhoto> }
+            .subscribe {
+                searchLiveData.postValue(it)
+            }
+
+        disposables.add(subscription)
     }
 
     override fun onCleared() {
+        disposables.dispose()
         super.onCleared()
     }
 }

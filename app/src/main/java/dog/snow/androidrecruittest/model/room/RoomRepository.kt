@@ -33,6 +33,8 @@ class RoomRepository : AlbumRepository, PhotoRepository, UserRepository {
     override fun getUser(id: Int): LiveData<RawUser> = userDao.getUser(id)
     override fun getAlbum(id: Int): LiveData<RawAlbum> = albumDao.getAlbum(id)
 
+    override fun findPhotos(title: String): List<RawPhoto>? = photoDao.findPhotos(title)
+
     override fun clearAllAlbums() = albumDao.clearAlbums()
     override fun clearAllPhotos() = photoDao.clearPhotos()
     override fun clearAllUsers() = userDao.clearUsers()
