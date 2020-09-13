@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_small"
         android:text="@string/offline_mode"
-        android:visibility="visible"
+        android:visibility="gone"
         android:elevation="10dp"
         android:textAlignment="center"
         android:background="@color/light_accent_color"
