@@ -41,7 +41,7 @@ class SplashViewModel(
         val photos = JSON.fetchPhotos(100)
 
         val filteredAlbums = JSON.fetchAlbums()
-            .flatMap {
+            .switchMap {
                 photos.scan(it) { albums, photos ->
                     photos.mapNotNull { photo ->
                         JSON.filterAlbumForPhoto(albums, photo)
@@ -52,7 +52,7 @@ class SplashViewModel(
                 it.distinctBy { it.id }
             }
         val filteredUsers = JSON.fetchUsers()
-            .flatMap {
+            .switchMap {
                 filteredAlbums.scan(it) { users, albums ->
                     albums.mapNotNull { album ->
                         JSON.filterUserForAlbum(users, album)
@@ -68,20 +68,17 @@ class SplashViewModel(
 
         val photosSubscription = photos
             .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
             .subscribe {
                 savePhotos(it)
             }
 
         val filteredAlbumsSubscription = filteredAlbums
             .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
             .subscribe {
                 saveAlbums(it)
             }
         val filteredUsersSubscription = filteredUsers
             .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
             .subscribe {
                 saveUsers(it)
             }
@@ -90,16 +87,21 @@ class SplashViewModel(
     }
 
     private fun savePhotos(photos: List<RawPhoto>) {
+        Log.i("elo photo", photos.toString())
         repository.saveMultiplePhotos(photos)
         photosLiveData.postValue(photos)
     }
 
     private fun saveAlbums(albums: List<RawAlbum>) {
+        Log.i("elo album", albums.toString())
+
         repository.saveMultipleAlbums(albums)
         albumsLiveData.postValue(albums)
     }
 
     private fun saveUsers(users: List<RawUser>) {
+        Log.i("elo users", users.toString())
+
         repository.saveMultipleUsers(users)
         usersLiveData.postValue(users)
     }

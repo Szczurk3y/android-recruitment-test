@@ -51,6 +51,8 @@ class SplashActivity : AppCompatActivity() {
         SnowDogApplication.connectivityLiveData.observe(this, Observer { status ->
             if (status == ConnectivityStatus.AVAILABLE) {
                 viewmodel.startDownload()
+                error_message.visibility = View.GONE
+                progressbar.visibility = View.VISIBLE
             } else {
                 error_message.visibility = View.VISIBLE
                 progressbar.visibility = View.GONE

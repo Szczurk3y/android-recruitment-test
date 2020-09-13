@@ -33,10 +33,8 @@ class ListActivity : AppCompatActivity() {
         val photos = intent.getParcelableArrayListExtra<RawPhoto>(RawPhoto.PHOTO_KEY)!!.toMutableList()
         val albums = intent.getParcelableArrayListExtra<RawAlbum>(RawAlbum.ALBUM_KEY)!!.toMutableList()
 
-        adapter = PhotosAdapter(photos, albums)
-
         rv_items.layoutManager = LinearLayoutManager(this)
-        rv_items.adapter = adapter
+        adapter = PhotosAdapter(photos, albums)
 
         adapter.setOnPhotoTapListener { photo ->
             val fragment = DetailsFragment.newInstance(photo)
@@ -58,5 +56,7 @@ class ListActivity : AppCompatActivity() {
                 tv_offline_mode.visibility = View.VISIBLE
             }
         })
+
+        rv_items.adapter = adapter
     }
 }

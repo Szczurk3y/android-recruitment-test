@@ -48,6 +48,7 @@ class PhotosAdapter(
         Picasso.get()
             .load(photosList[position].thumbnailUrl)
             .placeholder(R.drawable.ic_placeholder)
+            .priority(Picasso.Priority.HIGH)
             .into(holder.thumbnail)
 
 

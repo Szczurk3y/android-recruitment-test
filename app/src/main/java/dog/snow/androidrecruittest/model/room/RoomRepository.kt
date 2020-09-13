@@ -1,5 +1,6 @@
 package dog.snow.androidrecruittest.model.room
 
+import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import dog.snow.androidrecruittest.app.SnowDogApplication
 import dog.snow.androidrecruittest.model.RawAlbum
@@ -22,9 +23,15 @@ class RoomRepository : AlbumRepository, PhotoRepository, UserRepository {
         allPhotos = photoDao.getAllPhotos()
     }
 
-    override fun saveMultiplePhotos(photos: List<RawPhoto>) = photoDao.insertMultiplePhotos(photos)
-    override fun saveMultipleAlbums(albums: List<RawAlbum>) = albumDao.insertMultipleAlbums(albums)
-    override fun saveMultipleUsers(users: List<RawUser>) = userDao.insertMultipleUsers(users)
+    override fun saveMultiplePhotos(photos: List<RawPhoto>) {
+        InsertPhotosAsyncTask(photoDao).execute(photos)
+    }
+    override fun saveMultipleAlbums(albums: List<RawAlbum>) {
+        InsertAlbumsAsyncTask(albumDao).execute(albums)
+    }
+    override fun saveMultipleUsers(users: List<RawUser>) {
+        InsertUsersAsyncTask(userDao).execute(users)
+    }
 
     override fun getAllAlbums(): LiveData<List<RawAlbum>> = allAlbums
     override fun getAllPhotos(): LiveData<List<RawPhoto>> = allPhotos
@@ -38,4 +45,22 @@ class RoomRepository : AlbumRepository, PhotoRepository, UserRepository {
     override fun clearAllAlbums() = albumDao.clearAlbums()
     override fun clearAllPhotos() = photoDao.clearPhotos()
     override fun clearAllUsers() = userDao.clearUsers()
+
+    private class InsertPhotosAsyncTask(private val dao: PhotoDao ): AsyncTask<List<RawPhoto>, Void, Unit>() {
+        override fun doInBackground(vararg photo: List<RawPhoto>) {
+            dao.insertMultiplePhotos(photo[0])
+        }
+    }
+
+    private class InsertAlbumsAsyncTask(private val dao: AlbumDao ): AsyncTask<List<RawAlbum>, Void, Unit>() {
+        override fun doInBackground(vararg photo: List<RawAlbum>) {
+            dao.insertMultipleAlbums(photo[0])
+        }
+    }
+
+    private class InsertUsersAsyncTask(private val dao: UserDao ): AsyncTask<List<RawUser>, Void, Unit>() {
+        override fun doInBackground(vararg photo: List<RawUser>) {
+            dao.insertMultipleUsers(photo[0])
+        }
+    }
 }
