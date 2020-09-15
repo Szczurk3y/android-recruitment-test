@@ -19,6 +19,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+@Suppress("DEPRECATION")
 class SnowDogApplication : Application() {
     companion object {
         lateinit var database: MyDatabase
@@ -31,7 +32,7 @@ class SnowDogApplication : Application() {
         database = Room.databaseBuilder(this, MyDatabase::class.java, "my_database")
             .build()
 
-        val connectivityManager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
@@ -51,9 +52,8 @@ class SnowDogApplication : Application() {
             })
         }
 
-        val conMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = conMgr.activeNetworkInfo;
-        if (activeNetwork != null && activeNetwork.isConnected()) {
+        val activeNetwork = connectivityManager.activeNetworkInfo;
+        if (activeNetwork != null && activeNetwork.isConnected) {
             connectivityLiveData.postValue(ConnectivityStatus.AVAILABLE)
 
         } else {
